@@ -1,0 +1,25 @@
+<ion-view>
+  <div class="intro-slide">
+  	<div class="skip-intro" 
+  	ng-click="goto('dashboard')"
+  	>跳过</div>
+  	<ion-slide-box
+  		delegate-handle="intro-slide"
+      show-pager="false"
+  	>
+  		<ion-slide>
+        <img src="img/selfupdate.png">
+  		</ion-slide>
+  		<ion-slide>
+  			<img src="img/forgetcurve.png">
+  		</ion-slide>
+  		<ion-slide>
+  			<img src="img/startnow.png">
+  			<button 
+  			class="finish-intro button button-balanced" 
+  			ng-click="goto('dashboard')"
+  			>点击进入</button>
+  		</ion-slide>
+  	</ion-slide-box>
+  </div>
+</ion-view>

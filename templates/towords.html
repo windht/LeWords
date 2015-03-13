@@ -1,0 +1,96 @@
+<ion-view view-title="拓词模式">
+<ion-slide-box
+  delegate-handle="mask-slide"
+  show-pager="false"
+>
+  <ion-slide class="word-mask" 
+  ng-class="{'hide':hideMask}" 
+  ng-style="{paddingTop:150+'px',background:'-webkit-linear-gradient(top,'+Word.uicolor.top+','+Word.uicolor.bottom+')'}">
+    <div class="mask-sentence" >
+      &nbsp&nbsp&nbsp&nbsp{{mottoEnglish}}
+    </div>
+    <div class="mask-sentence" >
+      &nbsp&nbsp&nbsp&nbsp{{mottoChinese}}
+    </div>
+    <progress-button value="Word.loadProgress" type="horizontal" in-progress="单词加载中" complete="马上就好">单词加载中</a>
+  </ion-slide>
+  <ion-slide>
+    <div class="bar bar-header toword-header">
+      <button class="button back-button button-icon icon ion-ios-arrow-left" ng-click="goto('dashboard')"></button>
+      <div class="h1 title"> <!-- {{scope | Wordplanscope}} --></div>
+    </div>
+    <ion-content
+      scroll="false"
+    >
+      <ion-slide-box
+        does-continue="true"
+        auto-play="false"
+        show-pager="false"
+        delegate-handle="towords-slide"
+      >
+        <ion-slide ng-repeat="i in threeslide track by i.id">
+          <div class="recognition" 
+          ng-if="Word.towords.uiword[$index].type=='recognition'"
+          ng-style="{background:'-webkit-linear-gradient(top,'+Word.uicolor.top+','+Word.uicolor.bottom+')'}"
+          >
+            <div class="toword-card">
+              <div class="toword">
+                <h1 ng-if="Word.towords.uiword[$parent.$index].direction=='positive'">{{Word.worddata[scope].data[Word.towords.uiword[$index].currentword].word}}</h1>
+                <h1 ng-if="Word.towords.uiword[$parent.$index].direction=='negative'">{{Word.worddata[scope].data[Word.towords.uiword[$index].currentword].trans}}</h1>
+              </div>
+              <div class="choice">
+                <a class="leword-choice" 
+                ng-repeat="j in towordchoice track by j.id" 
+                ng-click="Word.towords.uiword[$parent.$index].selected == -1 && chooseword($parent.$index,$index,'recognition')"
+                ng-class="{'correct':Word.towords.uiword[$parent.$index].correctanswer==$index && Word.towords.uiword[$parent.$index].selected != -1,'wrong':Word.towords.uiword[$parent.$index].correctanswer!=$index && Word.towords.uiword[$parent.$index].selected == $index }"
+                >
+                  <p ng-if="Word.towords.uiword[$parent.$index].direction=='negative'" style="font-size:25px;">{{Word.worddata[scope].data[Word.towords.uiword[i.id].choices[j.id]].word}}</p>
+                  <p ng-if="Word.towords.uiword[$parent.$index].direction=='positive'">{{Word.worddata[scope].data[Word.towords.uiword[i.id].choices[j.id]].trans|limitTo:18}}
+                  </p>
+                </a>
+                <div class="able-button can">
+                  <img src="img/button-yes.png">
+                  我会
+                </div>
+                <div class="able-button cannot" ng-click="Word.towords.uiword[$index].selected == -1 && chooseword($index,5,'recognition')">
+                  <img src="img/button-no.png">
+                  我不会
+                </div>
+              </div>
+            </div>
+          </div> 
+          <div class="recall"
+          ng-if="Word.towords.uiword[$index].type=='recall'"
+          ng-style="{background:'-webkit-linear-gradient(top,'+Word.uicolor.top+','+Word.uicolor.bottom+')'}"
+          >
+                <div class="flash-card" ng-class="{'flipping': Word.towords.uiword[$index].flip}">
+                  <div class="front" ng-click="Word.towords.uiword[$index].flip=true">
+                      <div class="flash-review-label {{checknew(0)}}">新词{{checknew(1)}}</div>
+                      <div class="flash-card-main-word" 
+                      ng-show="Word.towords.uiword[$index].direction=='positive'" 
+                      ng-style="{fontSize:checkWordLength(Word.worddata[scope].data[Word.towords.uiword[$index].currentword].word)}">
+                      {{Word.worddata[scope].data[Word.towords.uiword[$index].currentword].word}}</div>
+                      <div class="flash-card-main-word" 
+                      ng-show="Word.towords.uiword[$index].direction=='negative'" 
+                      ng-class="{'small':wordlength[0]=='small','middle':wordlength[0]=='middle','big':wordlength[0]=='big'}">
+                      {{Word.worddata[scope].data[Word.towords.uiword[$index].currentword].trans|limitTo:18}}</div>
+                  </div>
+                  <div class="back" on-swipe-up="chooseword($index,0,'recall')" on-swipe-down="chooseword($index,1,'recall')">
+                      <div class="flash-review-label {{checknew(0)}}">新词{{checknew()}}</div>
+                      <div class="flash-card-main-word">{{Word.worddata[scope].data[Word.towords.uiword[$index].currentword].word}}</div>
+                      <div class="flash-card-word-meaning">
+                        <p>{{Word.worddata[scope].data[Word.towords.uiword[$index].currentword].trans}}</p>
+                      </div>
+                      <i><div class="flash-card-example" ng-repeat="example in wordlist[0].Example">{{example.sentence}}</div></i>
+                      <button type="button" class="button button-balanced gonext known" ng-click="chooseword($index,1,'recall')">我会 →</button>
+                      <button type="button" class="button button-assertive gonext unknown" ng-click="chooseword($index,0,'recall')">← 我不会</button>
+                  </div>
+                </div>
+          </div>
+          
+        </ion-slide>
+      </ion-slide-box>   
+    </ion-content>
+  </ion-slide>
+</ion-slide-box>
+</ion-view>

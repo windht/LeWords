@@ -1,0 +1,101 @@
+<ion-modal-view>
+    <ion-header-bar class="bar-positive">
+      <h1 class="title">新计划</h1>
+      <div class="buttons">
+        <button class="page-icon button icon button-clear ion-close close-button" ng-click="closeModal()"></button>
+      </div>
+      
+    </ion-header-bar>
+    <ion-content>
+      <div class="list">
+
+        <div class="item item-divider">
+          词汇本选择
+        </div>
+        <div class="item plan-scope-container">
+          <div class="plan-tabs">
+            <a class="plan-tabs-select" ng-class="{'active':planscope==0}" ng-click="changeplanscope(0)">高中</a>
+            <a class="plan-tabs-select" ng-class="{'active':planscope==1}" ng-click="changeplanscope(1)">大学</a>
+            <a class="plan-tabs-select" ng-class="{'active':planscope==2}" ng-click="changeplanscope(2)">出国</a>
+          </div>
+
+          <ion-slide-box
+            delegate-handle="plan-scope-select"
+            show-pager="false"
+            on-slide-changed="planscopechanged($index)"
+          >
+            <ion-slide>
+              <div class="plan-scope-box">
+                <div class="plan-scope-unit" ng-click="selectscope('gaozhong3500')" ng-class="{'active':selectedscope=='gaozhong3500'}">
+                  <i class='ion-ios-book-outline'></i>
+                  <p>高中3500</p>
+                </div>
+                <div class="plan-scope-unit" ng-click="selectscope('gaofen2400')" ng-class="{'active':selectedscope=='gaofen2400'}">
+                  <i class='ion-ios-book-outline'></i>
+                  <p>高分2400</p>
+                </div>
+              </div>
+            </ion-slide>
+            <ion-slide>
+              <div class="plan-scope-box">
+                <div class="plan-scope-unit" ng-click="selectscope('daxuesiji')" ng-class="{'active':selectedscope=='daxuesiji'}">
+                  <i class='ion-ios-book-outline'></i>
+                  <p>大学四级</p>
+                </div>   
+                <div class="plan-scope-unit" ng-click="selectscope('daxueliuji')" ng-class="{'active':selectedscope=='daxueliuji'}">
+                  <i class='ion-ios-book-outline'></i>
+                  <p>大学六级</p>
+                </div>
+                <div class="plan-scope-unit" ng-click="selectscope('zhuanyebaji')" ng-class="{'active':selectedscope=='zhuanyebaji'}">
+                  <i class='ion-ios-book-outline'></i>
+                  <p>专业八级</p>
+                </div>
+              </div>
+            </ion-slide>
+            <ion-slide>
+              <div class="plan-scope-box">
+                <div class="plan-scope-unit" ng-click="selectscope('sat')" ng-class="{'active':selectedscope=='sat'}">
+                  <i class='ion-ios-book-outline'></i>
+                  <p>SAT</p>
+                </div>
+                <div class="plan-scope-unit" ng-click="selectscope('toefl')" ng-class="{'active':selectedscope=='toefl'}">
+                  <i class='ion-ios-book-outline'></i>
+                  <p>TOEFL</p>
+                </div>
+                <div class="plan-scope-unit" ng-click="selectscope('ielts')" ng-class="{'active':selectedscope=='ielts'}">
+                  <i class='ion-ios-book-outline'></i>
+                  <p>IELTS</p>
+                </div>
+              </div>
+            </ion-slide>
+          </ion-slide-box>
+
+        </div>
+        <div class="item item-divider">
+          周期选择
+        </div>
+        <label class="item item-input item-select">
+          <div class="input-label">
+            自选周期
+          </div>
+          <select ng-model="plan.timeselected">
+            <option>10</option>
+            <option>15</option>
+            <option selected>30</option>
+            <option>60</option>
+          </select>
+        </label>
+        <ion-toggle ng-model="plan.autoadjust" toggle-class="toggle-calm">是否开启周期自动更新</ion-toggle>
+        <div class="item item-divider">
+          额外功能
+        </div>
+        <ion-toggle ng-model="plan.forgetcurvetrack" toggle-class="toggle-calm">遗忘曲线追踪</ion-toggle>
+        <ion-toggle ng-model="plan.attendrank" toggle-class="toggle-calm">参加乐道排名</ion-toggle>
+      </div>
+
+      <button class="button button-block button-balanced" ng-disabled="selectedscope==''" ng-click="submitnewplan()">
+        确认计划
+      </button>
+
+    </ion-content>
+</ion-modal-view>

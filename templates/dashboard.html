@@ -1,0 +1,193 @@
+<ion-view>
+  <ion-content
+  	has-bouncing="false"
+  >
+    <div class="dashboard-information"></div>
+    <div class="add-new-card" ng-show="Plans.data.length==0">
+    	<h2>无内容</h2>
+    	<h3>请点击加号以添加计划</h3>
+    </div>
+    <div class="collection-box">
+    	<div class="collection-card" 
+    	ng-repeat="plan in Plans.data track by plan.hash"
+    	ng-style="{top:checkEditTop($index),background:checkBackGround($index,plan.color.top,plan.color.bottom),zIndex:checkEditZ($index)}"
+    	ng-click="showCollection($index)"
+    	ng-class="{'editing':Plans.currentEdit==$index}"
+    	>
+		<!--<button class="button button-balanced" 
+			ng-show="Plans.currentEdit==$index" 
+			ng-click="Plans.currentEdit=-1">完成编辑
+			</button> -->
+			<div class="edit-card ion-edit" 
+			ng-click="edit($index)"
+			ng-show="(Plans.data.length-1)==$index"
+			>
+			</div>
+
+			<div class="card-setting ion-close"
+			ng-click="delete($index)"
+			>
+			</div>
+
+			<ion-content 
+			scroll="false"
+			class="edit-content" 
+			ng-class="{'show':Plans.currentEditStart!=$index}">
+				<div class="card-title">
+					{{plan.selectedscope | Wordplanscope}}
+					<span ng-class="{'opened':plan.forgetcurvetrack}">曲线</span>
+					<span ng-class="{'opened':plan.attendrank}">排名</span>
+				</div>
+				<div class="card-progress">
+					<div>
+						<div class="progress-indicator">总进度：27/3000</div>
+						<div
+					    round-progress
+					    max="100"
+					    current="60"
+					    color="#45ccce"
+					    bgcolor="transparent"
+					    radius="20"
+					    stroke="40"
+					    semi="false"
+					    rounded="false"
+					    iterations="50"
+					    animation="easeInOutQuart">
+						</div>
+						
+					</div>
+					<div>
+						<div class="progress-indicator">今日计划：12/150</div>
+						<div
+					    round-progress
+					    max="100"
+					    current="0"
+					    color="#45ccce"
+					    bgcolor="transparent"
+					    radius="20"
+					    stroke="40"
+					    semi="false"
+					    rounded="false"
+					    iterations="50"
+					    animation="easeInOutQuart">    	
+						</div>
+					</div>
+				</div>
+
+				<div class="card-entrance">
+					<button class="button button-calm" ng-click="startShuaCi('word',{'type':plan.selectedscope},plan.color.top,plan.color.bottom)">乐在词中</button>
+				</div>
+			</ion-content>
+
+			<ion-content 
+			class="edit-content" 
+			ng-class="{'show':Plans.currentEditEnd==$index && (Plans.data.length-1)==$index}"
+			style="background:#efefef"
+			>
+			      <div class="list">
+			        <div class="item item-divider" ng-if="!plan.scopeSelected">
+			          词汇本选择
+			        </div>
+			        <div class="item plan-scope-container" ng-if="!plan.scopeSelected">
+			          <div class="plan-tabs">
+			            <a class="plan-tabs-select" ng-class="{'active':plan.currentArea==0}" ng-click="plan.currentArea=0">高中</a>
+			            <a class="plan-tabs-select" ng-class="{'active':plan.currentArea==1}" ng-click="plan.currentArea=1">大学</a>
+			            <a class="plan-tabs-select" ng-class="{'active':plan.currentArea==2}" ng-click="plan.currentArea=2">出国</a>
+			          </div>
+
+			          <ion-slide-box
+			            delegate-handle="plan-scope-select"
+			            show-pager="false"
+			            active-slide="plan.currentArea"
+			          >
+			            <ion-slide>
+			              <div class="plan-scope-box">
+			                <div class="plan-scope-unit" ng-click="plan.selectedscope='gaozhong3500'" ng-class="{'active':plan.selectedscope=='gaozhong3500'}">
+			                  <i class='ion-ios-book-outline'></i>
+			                  <p>高中3500</p>
+			                </div>
+			                <div class="plan-scope-unit" ng-click="plan.selectedscope='gaofen2400'" ng-class="{'active':plan.selectedscope=='gaofen2400'}">
+			                  <i class='ion-ios-book-outline'></i>
+			                  <p>高分2400</p>
+			                </div>
+			              </div>
+			            </ion-slide>
+			            <ion-slide>
+			              <div class="plan-scope-box">
+			                <div class="plan-scope-unit" ng-click="plan.selectedscope='daxuesiji'" ng-class="{'active':plan.selectedscope=='daxuesiji'}">
+			                  <i class='ion-ios-book-outline'></i>
+			                  <p>大学四级</p>
+			                </div>   
+			                <div class="plan-scope-unit" ng-click="plan.selectedscope='daxueliuji'" ng-class="{'active':plan.selectedscope=='daxueliuji'}">
+			                  <i class='ion-ios-book-outline'></i>
+			                  <p>大学六级</p>
+			                </div>
+			                <div class="plan-scope-unit" ng-click="plan.selectedscope='zhuanyebaji'" ng-class="{'active':plan.selectedscope=='zhuanyebaji'}">
+			                  <i class='ion-ios-book-outline'></i>
+			                  <p>专业八级</p>
+			                </div>
+			              </div>
+			            </ion-slide>
+			            <ion-slide>
+			              <div class="plan-scope-box">
+			                <div class="plan-scope-unit" ng-click="plan.selectedscope='gre'" ng-class="{'active':plan.selectedscope=='gre'}">
+			                  <i class='ion-ios-book-outline'></i>
+			                  <p>GRE</p>
+			                </div>
+			                <div class="plan-scope-unit" ng-click="plan.selectedscope='toefl'" ng-class="{'active':plan.selectedscope=='toefl'}">
+			                  <i class='ion-ios-book-outline'></i>
+			                  <p>TOEFL</p>
+			                </div>
+			                <div class="plan-scope-unit" ng-click="plan.selectedscope='ielts'" ng-class="{'active':plan.selectedscope=='ielts'}">
+			                  <i class='ion-ios-book-outline'></i>
+			                  <p>IELTS</p>
+			                </div>
+			              </div>
+			            </ion-slide>
+			          </ion-slide-box>
+			        </div>
+			        <div class="item item-divider">
+			          周期选择
+			        </div>
+			        <label class="item item-input item-select">
+			          <div class="input-label">
+			            自选周期
+			          </div>
+			          <select ng-model="plan.timeselected">
+			            <option>10</option>
+			            <option>15</option>
+			            <option>30</option>
+			            <option>60</option>
+			          </select>
+			        </label>
+			        <ion-toggle ng-model="plan.autoadjust" toggle-class="toggle-calm">是否开启周期自动更新</ion-toggle>
+			        <div class="item item-divider">
+			          额外功能
+			        </div>
+			        <ion-toggle ng-model="plan.forgetcurvetrack" toggle-class="toggle-calm">遗忘曲线追踪</ion-toggle>
+			        <ion-toggle ng-model="plan.attendrank" toggle-class="toggle-calm">参加乐道排名</ion-toggle>
+			      </div>
+			      <button class="button button-block button-balanced" ng-click="save($index)" ng-disabled="plan.selectedscope==''"> 
+			      	<!--  -->
+			        确认计划
+			      </button>
+			</ion-content>
+
+    	</div>
+    </div>
+  </ion-content>
+
+  	
+
+  	<div class="tabs tabs-icon-top tabs-calm" ng-style="{zIndex:checkTabZ()}">
+  	  <div class="add-button ion-plus" ng-click="addPlan()"></div>
+	  <a class="tab-item">
+	    <i class="icon ion-home"></i>
+	    卡片
+	  </a>
+	  <a class="tab-item">
+	    <i class="icon ion-star"></i>
+	    档案
+	  </a>
+	</div>
+</ion-view>

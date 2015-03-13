@@ -1,0 +1,51 @@
+<ion-view title="卡片">
+  <ion-content
+    scroll='false'
+  >
+    <div class="flash-card-container">
+      <div class="" style="width:100%;height:100%">
+        <div class="flash-card" ng-class="{'flipping': flipbool, 'current': nextcardbool,'next':!nextcardbool }">
+          <div class="front" ng-click="flip()">
+            <a href="">
+              <div class="flash-review-label {{checknew(0)}}">新词{{checknew(1)}}</div>
+              <div class="flash-card-main-word" ng-class="{'small':wordlength[0]=='small','middle':wordlength[0]=='middle','big':wordlength[0]=='big'}">{{wordlist[0].word | StringCapitalize}}</div>
+            </a>
+          </div>
+          <div class="back" on-swipe-up="oddnextcardunknow()" on-swipe-down="oddnextcardknow()">
+              <div class="flash-review-label {{checknew(0)}}">新词{{checknew()}}</div>
+              <div class="flash-card-main-word">{{wordlist[0].word | StringCapitalize}}</div>
+              <div class="flash-card-word-meaning">
+                <p ng-repeat="meaning in wordlist[0].Meaning">{{meaning.mean}}
+                </p>
+              </div>
+              <i><div class="flash-card-example" ng-repeat="example in wordlist[0].Example">{{example.sentence}}</div></i>
+              <button type="button" class="button button-balanced gonext known" ng-click="oddnextcardknow()">我会这个词 →</button>
+              <button type="button" class="button button-assertive gonext unknown" ng-click="oddnextcardunknow()">← 我不会这个词</button>
+          </div>
+        </div>
+        <div class="flash-card" ng-class="{'flipping': flipbool,'next': nextcardbool,'current':!nextcardbool }">
+          <div class="front" ng-click="flip()">
+            <a href="">
+              <div class="flash-review-label {{checknew(0)}}">回顾{{checknew()}}</div>
+              <div class="flash-card-main-word" ng-class="{'small':wordlength[1]=='small','middle':wordlength[1]=='middle','big':wordlength[1]=='big'}">{{wordlist[1].word | StringCapitalize}}</div>
+            </a>
+          </div>
+          <div class="back" on-swipe-up="evennextcardunknow()" on-swipe-down="evennextcardknow()">
+              <div class="flash-review-label {{checknew(0)}}">回顾{{checknew()}}</div>
+              <div class="flash-card-main-word">{{wordlist[1].word | StringCapitalize}}</div>
+              <div class="flash-card-word-meaning">
+                <p ng-repeat="meaning in wordlist[1].Meaning">{{meaning.mean}}
+                </p>
+              </div>
+              <i><div class="flash-card-example" ng-repeat="example in wordlist[1].Example">{{example.sentence}}</div></i>
+              <button type="button" class="button button-balanced gonext known" ng-click="evennextcardknow()">我会这个词 <i class="ion-ios-arrow-thin-down"></i></button>
+              <button type="button" class="button button-assertive gonext unknown" ng-click="evennextcardunknow()"><i class="ion-ios-arrow-thin-up"></i> 我不会这个词</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <div class="card-statistic"></div>
+
+  </ion-content>
+</ion-view>

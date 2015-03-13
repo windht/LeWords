@@ -1,0 +1,36 @@
+<ion-view view-title="词汇计划">
+  <ion-content
+    direction="y"
+  >
+    <div class="plan-description">
+      <h1>{{Word.plan[planindex].scope | Wordplanscope}}</h1>
+      <span class="plan-badges" ng-class="{'active':Word.plan[planindex].periodupdate}" ng-click="togglePeriodUpdate(Word.plan[planindex].periodupdate)">进度自更新</span>
+      <span class="plan-badges" ng-class="{'active':Word.plan[planindex].forgetcurvetrack}" ng-click="toggleForgetCurveTrack(Word.plan[planindex].forgetcurvetrack)">遗忘曲线追踪</span>
+      <span class="plan-badges" ng-class="{'active':Word.plan[planindex].attendledaorank}" ng-click="toggleAttendLedaoRank(Word.plan[planindex].attendledaorank)">乐道排名</span>
+
+    </div>
+    <div class="list">
+
+      <a class="item item-thumbnail-left" ng-click="changestate('flashcard.card',{biglist:'gre',listlevel:'common',listnumber:2})">
+        <img src="" class="ion-ios-paper-outline" style="font-size:80px;">
+        <span class="item-note">翻转卡片</span>
+      </a>
+      <a class="item item-thumbnail-left" ng-click="changestate('flashcard.towords')">
+        <img src="" class="ion-social-wordpress" style="font-size:80px;">
+        <span class="item-note">拓词模式</span>       
+      </a>
+      <a class="item item-thumbnail-left" ng-show="Word.plan[planindex].forgetcurvetrack">
+        <img src="" class="ion-arrow-graph-up-right" style="font-size:80px;">
+        <span class="item-note">遗忘曲线</span>
+      </a>
+
+      <a class="item item-thumbnail-left" ng-show="Word.plan[planindex].attendledaorank">
+        <img src="" class="ion-aperture" style="font-size:80px;">
+        <span class="item-note">乐道排名</span>
+      </a>
+
+      
+
+    </div>
+</ion-content>
+</ion-view>
