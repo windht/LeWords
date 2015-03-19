@@ -1,5 +1,5 @@
 # LeWords
-A Word Reciting App for BuildMind student end Browser version based on ionic framework. Support Both Android and IOS platform. Can be tested on Chrome browsers using the mobile layout..
+A Word Reciting App for BuildMind student end Browser version based on ionic framework. Support Both Android and IOS platform. Can be tested on Chrome browsers using the mobile layout.. You can also access this [demo](http://tonghu.info/#/demo/4) with a mobile frame.
 
 # Current Features
 ## Fake Backend
